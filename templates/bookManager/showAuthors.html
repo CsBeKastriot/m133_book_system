@@ -6,12 +6,15 @@
 
 {% block content %}
 
+    <!-- Button to go back to the Author list Page-->
+    <td><a href="{% url 'authors' %}" class="btn btn-info">Back</a></td>
+
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="updateModalLabel">Update Author</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -23,43 +26,29 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Create Author</button>
+                        <button type="submit" class="btn btn-primary">Update Author</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    {% if form.errors %}
-        {% for error in form.errors %}
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal">
+        Update
+    </button>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <ul class="list-unstyled">
+                    <li>Firstname: {{ author.first_name }}</li>
+                    <li>Lastname: {{ author.last_name }}</li>
+                </ul>
             </div>
-        {% endfor %}
-    {% endif %}
-
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Firstname</th>
-            <th scope="col">Lastname</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for author in authors %}
-            <tr>
-                <td>{{ author.first_name }}</td>
-                <td>{{ author.last_name }}</td>
-                <td>
-                    <img src="{{ author.image.url }}" alt="author-image">
-                </td>
-            </tr>
-
-        {% endfor %}
-        </tbody>
-    </table>
+            <div class="col">
+              <img src="{{ author.image.url }}" class="img-fluid" alt="">
+            </div>
+        </div>
+    </div>
 {% endblock %}
