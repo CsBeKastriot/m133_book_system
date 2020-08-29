@@ -13,7 +13,7 @@
             <p>
                 Dein Vorname: {{ user.first_name }}
                 <br>
-                Dein Nachname: {{ user.last_name }}
+                Dein Nachname: {{ user.last_name | safe }}
             </p>
         </div>
 
