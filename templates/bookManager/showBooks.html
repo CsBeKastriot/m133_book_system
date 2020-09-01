@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block tab_title %}
+    Books
+{% endblock %}
+
+{% block content %}
+
+    <!-- Button to go back to the Book list Page-->
+    <td><a href="{% url 'books' %}" class="btn btn-info">Back</a></td>
+
+    <!-- Modal -->
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">Update Book</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        {{ form.as_p }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update Book</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal">
+        Update
+    </button>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <ul class="list-unstyled">
+                    <li>Firstname: {{ author.first_name }}</li>
+                    <li>Lastname: {{ author.last_name }}</li>
+                </ul>
+            </div>
+            <div class="col">
+              <img src="{{ author.image.url }}" class="img-fluid" alt="">
+            </div>
+        </div>
+    </div>
+{% endblock %}

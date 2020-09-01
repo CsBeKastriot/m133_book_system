@@ -5,27 +5,77 @@
 {% endblock %}
 
 {% block content %}
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">ISBN</th>
-      <th scope="col">Title</th>
-      <th scope="col">Read</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for book in books %}
-      <tr>
-      <td>{{ book.isbn }}</td>
-      <td>{{ book.title }}</td>
-      <td>{{ book.read }}</td>
-      <td>{{ book.authors.all|join:", " }}</td>
 
-      {% comment %}<td>
-          <img src="{{ book.image.url }}" alt="book-image">
-      </td>{% endcomment %}
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
-{% endblock %}
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="margin-top: 12px; margin-bottom: 12px" >
+        Add Book
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        {{ form.as_p }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update Book</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% if form.errors %}
+        {% for error in form.errors %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">ISBN</th>
+            <th scope="col">Title</th>
+            <th scope="col">Read</th>
+            <th scope="col">Author</th>
+            <th scope="col">Image</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for book in books %}
+            <tr>
+                <td>{{ book.isbn }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.read }}</td>
+                <td>{{ book.authors.all|join:", " }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#imageModal-{{ book.isbn }}">
+                        Show Image
+                    </button>
+                </td>
+                <td>
+                    <a href="{% url 'showBooks' book.isbn %}" class="btn btn-info">Open</a>
+                    <a href="{% url 'delteBooks' book.isbn %}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock  %}

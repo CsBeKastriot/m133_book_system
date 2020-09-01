@@ -28,7 +28,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Update Author</button>
+                        <button type="submit" class="btn btn-primary">Add Author</button>
                     </div>
                 </form>
             </div>
@@ -67,7 +67,10 @@
                         Show Image
                     </button>
                 </td>
-            <td><a href="{% url 'showAuthor' author.id%}" class="btn btn-info">Open</a></td>
+            <td>
+                <a href="{% url 'showAuthor' author.id%}" class="btn btn-info">Open</a>
+                <a href="{% url 'delteAuthor' author.id%}" class="btn btn-danger">Delete</a>
+            </td>
             </tr>
 
         {% endfor %}
